@@ -1,11 +1,23 @@
 import express, { Express, Request, Response } from 'express';
+import mongoose from 'mongoose';
 import config from './config/config';
+import tasksRouter from './routes/tasks';
 
 const app: Express = express();
 
 /* Parse the requset - formally app.use(bodyParser.urlencoded... / bodyParser.json... */
 app.use(express.urlencoded({ extended: false })); // Allows us to send nested json to the api
 app.use(express.json()); // Means we don't have to call json.parse / json.stringify on the client side
+
+/* Connect to Mongo */
+mongoose
+    .connect(config.mongo.url, config.mongo.options)
+    .then((result) => {
+        console.info('Connected to MongoDB');
+    })
+    .catch((error) => {
+        console.error(`error.message: ${error}`);
+    });
 
 /* Rules for the API */
 // middleware
@@ -29,6 +41,7 @@ app.use((req: Request, res: Response, next) => {
 app.use('/', (req: Request, res: Response) => {
     res.send('Task manager express server is running')
 });
+app.use('/tasks', tasksRouter);
 
 /* Error handling */
 // middleware
