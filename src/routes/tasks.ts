@@ -7,7 +7,7 @@ const router: Router = express.Router();
     @usage: create a task
     @url: http://localhost:8888/tasks/create/task
     @method: POST
-    @fields: assignee, description, priority, completeByDate
+    @fields: assignee, description, priority
     @access: PUBLIC
 */
 router.post('/create/task', controller.createTask);

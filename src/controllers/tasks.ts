@@ -3,11 +3,11 @@ import mongoose from 'mongoose';
 import Task from '../models/task';
 
 const createTask = (req: Request, res: Response, next: NextFunction) => {
+    console.log('createTask > req.body: ', req.body)
     let { 
         assignee,
         description,
         priority,
-        completeByDate,
      } = req.body;
 
     const task = new Task({
@@ -15,7 +15,6 @@ const createTask = (req: Request, res: Response, next: NextFunction) => {
         assignee,
         description,
         priority,
-        completeByDate,
     });
 
     return task

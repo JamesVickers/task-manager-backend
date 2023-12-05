@@ -5,6 +5,5 @@ export default interface ITask extends Document {
     assignee: string;
     description: string;
     priority: Priority;
-    completeByDate: Date; 
 }
 

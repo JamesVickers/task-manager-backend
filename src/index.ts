@@ -22,8 +22,7 @@ mongoose
 /* Rules for the API */
 // middleware
 app.use((req: Request, res: Response, next) => {
-    // requests can come form anywhere
-    // MUST RESTRICT THIS TO PRE-DEFINED IPS AND ROUTES WHEN IN PRODUCTION
+    // Todo: restrict this to pre-defined IPS if used in production
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
 
@@ -38,10 +37,8 @@ app.use((req: Request, res: Response, next) => {
 });
 
 /* Routes */
-app.use('/', (req: Request, res: Response) => {
-    res.send('Task manager express server is running')
-});
 app.use('/tasks', tasksRouter);
+
 
 /* Error handling */
 // middleware
