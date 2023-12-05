@@ -4,11 +4,7 @@ import Task from '../models/task';
 import { Priority } from '../types/types';
 
 const createTask = (req: Request, res: Response, next: NextFunction) => {
-    let { 
-        assignee,
-        description,
-        priority,
-     } = req.body;
+    const { assignee, description, priority }: { assignee: string, description: string, priority: Priority } = req.body;
 
     const task = new Task({
         _id: new mongoose.Types.ObjectId(),
