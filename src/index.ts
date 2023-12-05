@@ -25,14 +25,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
     // Todo: restrict this to pre-defined IPS if used in production
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
-
-    if (req.method === 'OPTIONS') {
-        // allow users of the api to see accepted methods for the API
-        res.header('Access-Control-Allow-Methods', 'GET PATCH DELETE POST PUT');
-        // just returns a status code of 200 meaning the method was accepted
-        return res.status(200).json({});
-    }
-
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     next();
 });
 
