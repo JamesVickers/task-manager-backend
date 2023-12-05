@@ -29,4 +29,13 @@ router.post('/create/task', controller.createTask);
 */
 router.put('/update/task', controller.updateTask);
 
+/* 
+    @usage: delete a task
+    @url: http://localhost:1337/tasks/delete/task
+    @method: DELETE
+    @fields: id
+    @access: PUBLIC
+*/
+router.delete('/delete/task', controller.deleteTask);
+
 export = router;

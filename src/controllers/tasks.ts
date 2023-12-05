@@ -77,8 +77,27 @@ const updateTask = (req: Request, res: Response, next: NextFunction) => {
         });
 };
 
+const deleteTask = (req: Request, res: Response, next: NextFunction) => {
+    let { id }: { id: string } = req.body;
+
+    Task.findByIdAndDelete({ _id: id })
+        .exec()
+        .then((result) => {
+            return res.status(200).json({
+                task: result
+            });
+        })
+        .catch((error) => {
+            return res.status(500).json({
+                message: error.message,
+                error
+            });
+        });
+};
+
 export default {
     createTask,
     getAllTasks,
-    updateTask
+    updateTask,
+    deleteTask
 };
