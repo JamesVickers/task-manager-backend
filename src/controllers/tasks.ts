@@ -1,9 +1,9 @@
 import { Request, Response, NextFunction } from 'express';
 import mongoose from 'mongoose';
 import Task from '../models/task';
+import { Priority } from '../types/types';
 
 const createTask = (req: Request, res: Response, next: NextFunction) => {
-    console.log('createTask > req.body: ', req.body)
     let { 
         assignee,
         description,
@@ -50,7 +50,39 @@ const getAllTasks = (req: Request, res: Response, next: NextFunction) => {
         });
 };
 
+const updateTask = (req: Request, res: Response, next: NextFunction) => {
+    const { id, assignee, description, priority }: { id: string, assignee?: string, description?: string, priority?: Priority } = req.body;
+
+    const updateParams: { assignee?: string, description?: string, priority?: Priority } = {};
+
+    if (assignee !== undefined) {
+        updateParams.assignee = assignee;
+    }
+    if (description !== undefined) {
+        updateParams.description = description;
+    }
+    if (priority !== undefined) {
+        updateParams.priority = priority;
+    }
+
+    // Option to set new:true is we want the updated document returned, as by default mongoose returns the old document ad it was before the update
+    Task.findByIdAndUpdate({ _id: id }, { $set: updateParams }, { new: true })
+        .exec()
+        .then((result) => {
+            return res.status(200).json({
+                task: result
+            });
+        })
+        .catch((error) => {
+            return res.status(500).json({
+                message: error.message,
+                error
+            });
+        });
+};
+
 export default {
     createTask,
-    getAllTasks
+    getAllTasks,
+    updateTask
 };

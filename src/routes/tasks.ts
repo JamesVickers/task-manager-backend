@@ -20,5 +20,13 @@ router.post('/create/task', controller.createTask);
     @access: PUBLIC
 */ router.get('/get/all', controller.getAllTasks);
 
+/* 
+    @usage: update a task by id
+    @url: http://localhost:1337/tasks/update/task
+    @method: PUT
+    @fields: id, assignee?, description?, priority?
+    @access: PUBLIC
+*/
+router.put('/update/task', controller.updateTask);
 
 export = router;

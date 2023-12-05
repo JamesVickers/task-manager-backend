@@ -1,4 +1,4 @@
-import express, { Express, Request, Response } from 'express';
+import express, { Express, NextFunction, Request, Response} from 'express';
 import mongoose from 'mongoose';
 import config from './config/config';
 import tasksRouter from './routes/tasks';
@@ -21,7 +21,7 @@ mongoose
 
 /* Rules for the API */
 // middleware
-app.use((req: Request, res: Response, next) => {
+app.use((req: Request, res: Response, next: NextFunction) => {
     // Todo: restrict this to pre-defined IPS if used in production
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
@@ -43,7 +43,7 @@ app.use('/tasks', tasksRouter);
 /* Error handling */
 // middleware
 // if API route not found
-app.use((req: Request, res: Response, next) => {
+app.use((req: Request, res: Response, next: NextFunction) => {
     const error = new Error('Route not found');
 
     return res.status(404).json({
