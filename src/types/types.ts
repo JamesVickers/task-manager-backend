@@ -1,1 +1,1 @@
-export type Priority = 1 | 2 | 3;
+export type Priority = number;
