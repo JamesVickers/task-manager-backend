@@ -1,7 +1,5 @@
 # Task Manager Backend
 
-This repository contains a Node.js Express API for managing tasks.
-
 ## Description
 
 The backend REST API for a task management web application, to be used with the corresponding [task-manager-frontend](https://github.com/JamesVickers/task-manager-frontend).
@@ -24,9 +22,9 @@ Before you begin, ensure you have met the following requirements:
 
 - **Git**: Git is required for version control. Install it from [git-scm.com](https://git-scm.com/downloads).
 
-- **MongoDB**: [MongoDB](https://www.mongodb.com/docs/manual/installation/) installed locally, ideally with (MongoDB Compass)[https://www.mongodb.com/docs/compass/current/install/] for data visualisation.
+- **MongoDB**: [MongoDB](https://www.mongodb.com/docs/manual/installation/) installed locally, ideally with [MongoDB Compass](https://www.mongodb.com/docs/compass/current/install/) for data visualisation.
 
-## Setup and running the project locally
+## Setup and run the project locally
 
 Follow these steps to get the project up and running on your local machine:
 
