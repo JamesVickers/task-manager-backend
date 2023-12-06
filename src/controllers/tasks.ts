@@ -16,8 +16,7 @@ const createTask = (req: Request, res: Response, next: NextFunction) => {
     return task
         .save()
         .then((result) => {
-            // 201 created
-            return res.status(201).json({
+            return res.status(201).json({ // 201 created
                 message: 'Task created successfully.',
                 task: result
             });
@@ -51,13 +50,6 @@ const getAllTasks = (req: Request, res: Response, next: NextFunction) => {
 const updateTask = (req: Request, res: Response, next: NextFunction) => {
     const { id, assignee, description, priority }: { id: string, assignee?: string, description?: string, priority?: Priority } = req.body;
 
-    const mongoose = require('mongoose');
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(400).json({
-            message: 'Invalid ID format.'
-        });
-    }
-
     const updateParams: { assignee?: string, description?: string, priority?: Priority } = {};
 
     if (assignee !== undefined) {
@@ -90,13 +82,6 @@ const updateTask = (req: Request, res: Response, next: NextFunction) => {
 const deleteTask = (req: Request, res: Response, next: NextFunction) => {
     const { id }: { id: string } = req.body;
 
-    const mongoose = require('mongoose');
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(400).json({
-            message: 'Invalid ID format.'
-        });
-    }
-
     Task.findByIdAndDelete({ _id: id })
         .exec()
         .then((result) => {
@@ -113,9 +98,28 @@ const deleteTask = (req: Request, res: Response, next: NextFunction) => {
         });
 };
 
+const deleteTasks = (req: Request, res: Response, next: NextFunction) => {
+    const { ids } = req.body;
+
+    Task.deleteMany({ _id: { $in: ids } })
+        .exec()
+        .then((result) => {
+            return res.status(200).json({
+                message: `${result.deletedCount} tasks deleted successfully.`
+            });
+        })
+        .catch((error) => {
+            return res.status(500).json({
+                message: error.message,
+                error
+            });
+        });
+};
+
 export default {
     createTask,
     getAllTasks,
     updateTask,
-    deleteTask
+    deleteTask,
+    deleteTasks
 };
