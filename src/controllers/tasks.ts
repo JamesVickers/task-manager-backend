@@ -4,7 +4,15 @@ import Task from '../models/task';
 import { Priority } from '../types/types';
 
 const createTask = (req: Request, res: Response, next: NextFunction) => {
-    const { assignee, description, priority }: { assignee: string, description: string, priority: Priority } = req.body;
+    const {
+        assignee,
+        description,
+        priority
+    }: {
+        assignee: string,
+        description: string,
+        priority: Priority
+    } = req.body;
 
     const task = new Task({
         _id: new mongoose.Types.ObjectId(),
@@ -48,7 +56,17 @@ const getAllTasks = (req: Request, res: Response, next: NextFunction) => {
 };
 
 const updateTask = (req: Request, res: Response, next: NextFunction) => {
-    const { id, assignee, description, priority }: { id: string, assignee?: string, description?: string, priority?: Priority } = req.body;
+    const {
+        _id,
+        assignee,
+        description,
+        priority
+    }: {
+        _id: string,
+        assignee: string,
+        description: string,
+        priority: Priority
+    } = req.body;
 
     const updateParams: { assignee?: string, description?: string, priority?: Priority } = {};
 
@@ -63,7 +81,7 @@ const updateTask = (req: Request, res: Response, next: NextFunction) => {
     }
 
     // Option to set new:true is we want the updated document returned, as by default mongoose returns the old document ad it was before the update
-    Task.findByIdAndUpdate({ _id: id }, { $set: updateParams }, { new: true })
+    Task.findByIdAndUpdate({ _id }, { $set: updateParams }, { new: true })
         .exec()
         .then((result) => {
             return res.status(200).json({
@@ -80,9 +98,9 @@ const updateTask = (req: Request, res: Response, next: NextFunction) => {
 };
 
 const deleteTask = (req: Request, res: Response, next: NextFunction) => {
-    const { id }: { id: string } = req.body;
+    const { _id }: { _id: string } = req.body;
 
-    Task.findByIdAndDelete({ _id: id })
+    Task.findByIdAndDelete({ _id })
         .exec()
         .then((result) => {
             return res.status(200).json({
