@@ -9,13 +9,13 @@ const app: Express = express();
 app.use(express.urlencoded({ extended: false })); // Allows us to send nested json to the api
 app.use(express.json()); // Means we don't have to call json.parse / json.stringify on the client side
 
-/* Connect to Mongo */
+/* Connect to Mongo using mongoose */
 mongoose
     .connect(config.mongo.url, config.mongo.options)
-    .then((result) => {
+    .then((result: typeof mongoose) => {
         console.info('Connected to MongoDB');
     })
-    .catch((error) => {
+    .catch((error: Error) => {
         console.error(`error.message: ${error}`);
     });
 
@@ -32,13 +32,11 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 /* Routes */
 app.use('/tasks', tasksRouter);
 
-
 /* Error handling */
 // middleware
 // if API route not found
 app.use((req: Request, res: Response, next: NextFunction) => {
-    const error = new Error('Route not found');
-
+    const error: Error = new Error('Route not found');
     return res.status(404).json({
         message: error.message
     });
