@@ -12,10 +12,25 @@
 - **Request Parameters**
   - `assignee` (string): Person assigned to the task.
   - `description` (string): Description of the task.
-  - `priority` (number): Priority level of the task.
+  - `priority` (string): Priority level of the task.
 
-- **Access**
-  - PUBLIC
+- **Return Values**
+  - `201 Created` on success:
+    ```json
+    {
+        "message": "Task created successfully.",
+        "task": {
+            // Task object details
+        }
+    }
+    ```
+  - `500 Internal Server Error` on failure:
+    ```json
+    {
+        "message": "Error message describing the issue.",
+        "error": { /* Error details */ }
+    }
+    ```
 
 ---
 
@@ -28,11 +43,24 @@
 - **Description**
   - Retrieves all tasks.
 
-- **Request Parameters**
-  - None
-
-- **Access**
-  - PUBLIC
+- **Return Values**
+  - `200 OK` on success:
+    ```json
+    {
+        "message": "Tasks retrieved successfully.",
+        "count": 5,
+        "tasks": [
+            // Array of task objects
+        ]
+    }
+    ```
+  - `500 Internal Server Error` on failure:
+    ```json
+    {
+        "message": "Error message describing the issue.",
+        "error": { /* Error details */ }
+    }
+    ```
 
 ---
 
@@ -47,12 +75,27 @@
 
 - **Request Parameters**
   - `id` (string): ID of the task to be updated.
-  - `assignee` (string): New assignee of the task.
-  - `description` (string): New description of the task.
-  - `priority` (number): New priority level of the task.
+  - `assignee` (optional string): New assignee of the task.
+  - `description` (optional string): New description of the task.
+  - `priority` (optional string): New priority level of the task.
 
-- **Access**
-  - PUBLIC
+- **Return Values**
+  - `200 OK` on success:
+    ```json
+    {
+        "message": "Task updated successfully.",
+        "task": {
+            // Updated task object details
+        }
+    }
+    ```
+  - `500 Internal Server Error` on failure:
+    ```json
+    {
+        "message": "Error message describing the issue.",
+        "error": { /* Error details */ }
+    }
+    ```
 
 ---
 
@@ -68,8 +111,23 @@
 - **Request Parameters**
   - `id` (string): ID of the task to be deleted.
 
-- **Access**
-  - PUBLIC
+- **Return Values**
+  - `200 OK` on success:
+    ```json
+    {
+        "message": "Task deleted successfully.",
+        "task": {
+            // Deleted task object details
+        }
+    }
+    ```
+  - `500 Internal Server Error` on failure:
+    ```json
+    {
+        "message": "Error message describing the issue.",
+        "error": { /* Error details */ }
+    }
+    ```
 
 ---
 
@@ -80,10 +138,22 @@
   - `http://localhost:1337/tasks/delete/tasks`
 
 - **Description**
-  - Deletes multiple tasks by their IDs.
+  - Deletes multiple tasks.
 
 - **Request Parameters**
-  - `id` (array of strings): IDs of the tasks to be deleted.
+  - `ids` (array of strings): IDs of the tasks to be deleted.
 
-- **Access**
-  - PUBLIC
+- **Return Values**
+  - `200 OK` on success:
+    ```json
+    {
+        "message": "3 tasks deleted successfully."
+    }
+    ```
+  - `500 Internal Server Error` on failure:
+    ```json
+    {
+        "message": "Error message describing the issue.",
+        "error": { /* Error details */ }
+    }
+    ```
