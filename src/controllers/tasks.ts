@@ -18,6 +18,7 @@ const createTask = (req: Request, res: Response, next: NextFunction) => {
         .then((result) => {
             // 201 created
             return res.status(201).json({
+                message: 'Task created successfully.',
                 task: result
             });
         })
@@ -34,6 +35,7 @@ const getAllTasks = (req: Request, res: Response, next: NextFunction) => {
         .exec()
         .then((results) => {
             return res.status(200).json({
+                message: 'Tasks retrieved successfully.',
                 count: results.length,
                 tasks: results
             });
@@ -48,6 +50,13 @@ const getAllTasks = (req: Request, res: Response, next: NextFunction) => {
 
 const updateTask = (req: Request, res: Response, next: NextFunction) => {
     const { id, assignee, description, priority }: { id: string, assignee?: string, description?: string, priority?: Priority } = req.body;
+
+    const mongoose = require('mongoose');
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(400).json({
+            message: 'Invalid ID format.'
+        });
+    }
 
     const updateParams: { assignee?: string, description?: string, priority?: Priority } = {};
 
@@ -66,6 +75,7 @@ const updateTask = (req: Request, res: Response, next: NextFunction) => {
         .exec()
         .then((result) => {
             return res.status(200).json({
+                message: 'Tasks updated successfully.',
                 task: result
             });
         })
@@ -78,12 +88,20 @@ const updateTask = (req: Request, res: Response, next: NextFunction) => {
 };
 
 const deleteTask = (req: Request, res: Response, next: NextFunction) => {
-    let { id }: { id: string } = req.body;
+    const { id }: { id: string } = req.body;
+
+    const mongoose = require('mongoose');
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(400).json({
+            message: 'Invalid ID format.'
+        });
+    }
 
     Task.findByIdAndDelete({ _id: id })
         .exec()
         .then((result) => {
             return res.status(200).json({
+                message: 'Task deleted successfully.',
                 task: result
             });
         })
