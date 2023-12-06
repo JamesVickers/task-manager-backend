@@ -4,6 +4,10 @@
 
 The backend REST API for a task management web application, to be used with the corresponding [task-manager-frontend](https://github.com/JamesVickers/task-manager-frontend).
 
+## API Documentation
+
+Documentation for each of the REST API endpoints can be found in [src/docs/API.md](https://github.com/JamesVickers/task-manager-backend/tree/main/src/docs).
+
 ## Technologies Used
 
 - [Node.js](https://nodejs.org/)
