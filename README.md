@@ -6,7 +6,7 @@ The backend REST API for a task management web application, to be used with the 
 
 ## API Documentation
 
-Documentation for each of the REST API endpoints can be found in [src/docs/API.md](https://github.com/JamesVickers/task-manager-backend/tree/main/src/docs).
+Documentation for each of the REST API endpoints can be found in [src/docs/API.md](https://github.com/JamesVickers/task-manager-backend/blob/main/src/docs/API.md).
 
 ## Technologies Used
 
