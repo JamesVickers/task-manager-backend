@@ -42,7 +42,4 @@ app.use((req: Request, res: Response, next: NextFunction) => {
     });
 });
 
-/* Create the server*/
-app.listen(config.server.port, () => {
-    console.log(`Server is running at http://localhost:${config.server.port}`);
-});
+export default app;
