@@ -1,5 +1,4 @@
 import mongoose, { Schema } from 'mongoose';
-import { v4 } from 'uuid';
 
 export interface ITask extends mongoose.Document {
     _id: string;
