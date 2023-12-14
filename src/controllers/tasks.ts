@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import mongoose from 'mongoose';
-import Task from '../models/task';
+import { TaskModel } from '../models/task';
 import { Priority } from '../types/types';
 
 const createTask = (req: Request, res: Response, next: NextFunction) => {
@@ -14,7 +14,7 @@ const createTask = (req: Request, res: Response, next: NextFunction) => {
         priority: Priority
     } = req.body;
 
-    const task = new Task({
+    const task = new TaskModel({
         _id: new mongoose.Types.ObjectId(),
         assignee,
         description,
@@ -38,7 +38,7 @@ const createTask = (req: Request, res: Response, next: NextFunction) => {
 };
 
 const getAllTasks = (req: Request, res: Response, next: NextFunction) => {
-    Task.find()
+    TaskModel.find()
         .exec()
         .then((results) => {
             return res.status(200).json({
@@ -81,7 +81,7 @@ const updateTask = (req: Request, res: Response, next: NextFunction) => {
     }
 
     // Option to set new:true is we want the updated document returned, as by default mongoose returns the old document ad it was before the update
-    Task.findByIdAndUpdate({ _id }, { $set: updateParams }, { new: true })
+    TaskModel.findByIdAndUpdate({ _id }, { $set: updateParams }, { new: true })
         .exec()
         .then((result) => {
             return res.status(200).json({
@@ -100,7 +100,7 @@ const updateTask = (req: Request, res: Response, next: NextFunction) => {
 const deleteTask = (req: Request, res: Response, next: NextFunction) => {
     const { _id }: { _id: string } = req.body;
 
-    Task.findByIdAndDelete({ _id })
+    TaskModel.findByIdAndDelete({ _id })
         .exec()
         .then((result) => {
             return res.status(200).json({
@@ -119,7 +119,7 @@ const deleteTask = (req: Request, res: Response, next: NextFunction) => {
 const deleteTasks = (req: Request, res: Response, next: NextFunction) => {
     const { ids } = req.body;
 
-    Task.deleteMany({ _id: { $in: ids } })
+    TaskModel.deleteMany({ _id: { $in: ids } })
         .exec()
         .then((result) => {
             return res.status(200).json({
