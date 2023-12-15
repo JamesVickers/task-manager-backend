@@ -100,10 +100,10 @@ describe('Tasks: ', () => {
         describe('given an invalid request: ', () => {
             const createTaskEndpoint = '/tasks/create/task';
 
-            it('should return code 201', async () => {
+            it('should return code 500', async () => {
                 // const response = await request(app).get(createTaskEndpoint).send();
                 
-                // expect(response.statusCode).toBe(201);
+                // expect(response.statusCode).toBe(500);
             })
         })
     })
