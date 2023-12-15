@@ -24,7 +24,6 @@ describe('Tasks: ', () => {
             { assignee: 'Assignee 1', description: 'Description 1', priority: 1 },
             { assignee: 'Assignee 2', description: 'Description 2', priority: 2 },
         ]);
-        console.log('createdTasks: ', createdTasks)
     });
 
     afterEach(async () => {
@@ -35,33 +34,36 @@ describe('Tasks: ', () => {
     describe('/tasks/get/all: ', () => {
         describe('given a valid request: ', () => {
             const getAllTasksEndpoint = '/tasks/get/all';
-            it('should return response code 200', async () => { // expect(true).toBe(true);
-
+            
+            it('should return code 200', async () => {
                 const response = await request(app).get(getAllTasksEndpoint).send();
-
-                // console.log('response: ', response);
+                
                 expect(response.statusCode).toBe(200);
-
             })
-            // it('should return an array of tasks', async () => {
-            //     // expect(true).toBe(true);
+            it('should return the correct success message', async () => {
+                const { body: { message: responseMessage } } = await request(app).get(getAllTasksEndpoint).send();
 
-            //     const { body:  { message, count, tasks } } = await request(app).get(getAllTasksEndpoint).send();
+                expect(responseMessage).toEqual('Tasks retrieved successfully.');
+            })
+            it('should return an array of with the correct number of tasks', async () => {
+                const { body: { count: responseCount } } = await request(app).get(getAllTasksEndpoint).send();
 
-            //     console.log('tasks: ', tasks);
+                expect(responseCount).toEqual(createdTasks.length);
+            })
+            it('should return tasks with correct properties and values', async () => {
+                const { body: { tasks: responseTasks } } = await request(app).get(getAllTasksEndpoint).send();
 
-            //     expect(tasks).toEqual(
-            //         expect.arrayContaining(
-            //             createdTasks.map((task) => expect.objectContaining({
-            //                 _id: task._id,
-            //                 assignee: task.assignee,
-            //                 description: task.description,
-            //                 priority: task.priority,
-            //                 // Add other fields to check as needed
-            //             }))
-            //         )
-            //     );
-            // })
+                expect(responseTasks).toEqual(
+                    expect.arrayContaining(
+                        createdTasks.map((task) => expect.objectContaining({
+                            _id: String(task._id),
+                            assignee: task.assignee,
+                            description: task.description,
+                            priority: task.priority,
+                        }))
+                    )
+                );
+            })
         })
     })
 })
