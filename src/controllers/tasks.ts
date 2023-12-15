@@ -38,6 +38,13 @@ const createTask = (req: Request, res: Response, next: NextFunction) => {
 };
 
 const getAllTasks = (req: Request, res: Response, next: NextFunction) => {
+    if (Object.keys(req.body).length > 0) {
+        const error: any = new Error('Unexpected parameter');
+        error.status = 500;
+        // return next(error);
+        throw error;
+    }
+
     TaskModel.find()
         .exec()
         .then((results) => {
